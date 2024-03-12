@@ -3,7 +3,8 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Select, useColorScheme
+  Select,
+  useColorScheme,
 } from "@mui/material";
 import Iconify from "./Iconfy";
 
@@ -16,8 +17,10 @@ export default function ModeSelect() {
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-      <InputLabel id="mode-slect" color="grey">Mode</InputLabel>
+    <FormControl size="small">
+      <InputLabel id="mode-slect" color="grey">
+        Mode
+      </InputLabel>
       <Select
         labelId="mode-select-id"
         value={mode}

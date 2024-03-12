@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "@mui/material";
-import AppBard from "../../components/AppBard";
+import AppBard from "~/components/AppBard/AppBard";
 import BoardBar from "./BoardBar/BoardBar";
 import BoardContent from "./BoardContent/BoardContent";
 
