@@ -28,13 +28,15 @@ function AppBard() {
       width={1}
       sx={{
         height: (theme) => theme.trello.appBarHeight,
+        overflowX: "auto",
       }}
       px={2}
+      gap={1}
     >
       <Stack direction={"row"} gap={2} alignItems="center">
         <Iconify
-          width={20}
-          height={20}
+          width={24}
+          height={24}
           color="primary.main"
           icon="gg:menu-grid-r"
         />
@@ -54,16 +56,23 @@ function AppBard() {
             Trello
           </Typography>
         </Stack>
-        <Workspaces />
-        <Recent />
-        <Started />
-        <Templates />
 
-        <Button variant="outlined">Create</Button>
+        <Box sx={{ display: { xs: "none", md: "flex" } }} gap={1}>
+          <Workspaces />
+          <Recent />
+          <Started />
+          <Templates />
+          <Button variant="outlined">Create</Button>
+        </Box>
       </Stack>
 
       <Stack direction="row" alignItems={"center"} gap={1}>
-        <TextField label="Search" type="search" size="small" />
+        <TextField
+          label="Search"
+          type="search"
+          size="small"
+          sx={{ minWidth: 120 }}
+        />
         <ModeSelect />
 
         <Tooltip title="Notification">
