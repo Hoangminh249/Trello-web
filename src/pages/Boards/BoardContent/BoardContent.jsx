@@ -1,20 +1,21 @@
-import React from "react";
-import { Stack } from "@mui/material";
+import {
+  Stack
+} from "@mui/material";
+import ListColumns from "./ListColumns/ListColumns";
 
 function BoardContent() {
   return (
     <Stack
       direction="row"
-      alignItems={"center"}
       width={1}
       sx={{
-        height: (theme) =>
-          `calc(100vh - ${theme.trello.boardBarHeight} - ${theme.trello.appBarHeight})`,
+        height: (theme) => theme.trello.boardContentHeight,
         backgroundColor: (theme) =>
           theme.palette.mode === "dark" ? "#34495e" : "#1976d2",
       }}
+      p="10px 0"
     >
-      Board Content
+      <ListColumns />
     </Stack>
   );
 }

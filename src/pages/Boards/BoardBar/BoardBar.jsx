@@ -8,13 +8,11 @@ const MENU_STYLES = {
   borderRadius: "4px",
   color: "white",
   "&:hover": {
+    color: "primary.50",
     backgroundColor: "primary.50", // Thay đổi màu khi hover
   },
   ".MuiChip-icon": {
     color: "white",
-  },
-  "&:hover": {
-    color: "primary.50",
   },
 };
 
@@ -29,10 +27,10 @@ function BoardBar() {
         overflowX: "auto",
         backgroundColor: (theme) =>
           theme.palette.mode === "dark" ? "#34495e" : "#1976d2",
+        "&::-webkit-scrollbar-track": { m: 2 },
       }}
       justifyContent="space-between"
       gap={2}
-      borderBottom="1px solid white"
       px={2}
     >
       <Stack direction={"row"} gap={1} alignItems="center">
@@ -96,7 +94,7 @@ function BoardBar() {
               width: 32,
               height: 32,
               fontSize: 16,
-              border:'none'
+              border: "none",
             },
           }}
         >
