@@ -12,6 +12,13 @@ module.exports = {
   settings: { react: { version: "18.2" } },
   plugins: ["react-refresh"],
   rules: {
+    // mui
+    // "no-restricted-imports": [
+    //   "error",
+    //   {
+    //     "patterns": ["@mui/*/*/*"]
+    //   }
+    // ],
     "react/jsx-no-target-blank": "off",
     "react-refresh/only-export-components": [
       "warn",
