@@ -9,7 +9,7 @@ import {
 import Iconify from "~/components/Iconfy";
 import Card from "./Card/Card";
 
-function ListCards() {
+function ListCards({ cards }) {
   return (
     <Stack
       direction="column"
@@ -31,17 +31,9 @@ function ListCards() {
         },
       }}
     >
-      <Card />
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
-      <Card temp/>
+      {cards?.map((card) => (
+        <Card key={card._id} card={card} />
+      ))}
     </Stack>
   );
 }

@@ -1,9 +1,11 @@
-import {
-  Stack
-} from "@mui/material";
+import { Stack } from "@mui/material";
+import { mapOrder } from "../../../utils/formatters";
 import ListColumns from "./ListColumns/ListColumns";
 
-function BoardContent() {
+function BoardContent({ board }) {
+  const { columns, columnOrderIds } = board;
+  const orderedColumns = mapOrder(columns, columnOrderIds, "_id");
+
   return (
     <Stack
       direction="row"
@@ -15,7 +17,7 @@ function BoardContent() {
       }}
       p="10px 0"
     >
-      <ListColumns />
+      <ListColumns columns={orderedColumns} />
     </Stack>
   );
 }

@@ -2,7 +2,7 @@ import { Button, Stack } from "@mui/material";
 import Iconify from "~/components/Iconfy";
 import Column from "./Column/Column";
 
-function ListColumns() {
+function ListColumns({ columns }) {
   return (
     <Stack
       direction={"row"}
@@ -15,10 +15,9 @@ function ListColumns() {
         "&::-webkit-scrollbar-track": { m: 2 },
       }}
     >
-      <Column />
-      <Column />
-      <Column />
-
+      {columns.map((col) => {
+        return <Column key={col._id} column={col} />;
+      })}
       {/* Box add new Column */}
       <Stack
         minWidth={200}

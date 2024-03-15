@@ -9,10 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import Iconify from "~/components/Iconfy";
+import { mapOrder } from "~/utils/formatters";
 import DropdownMenu from "../../DropdownMenu";
 import ListCards from "./ListCards/ListCards";
 
-function Column() {
+function Column({ column }) {
+  const { title, cards, cardOrderIds } = column;
+  const oderedCards = mapOrder(cards, cardOrderIds, "_id");
+
   return (
     <Stack
       sx={{
@@ -39,12 +43,12 @@ function Column() {
         justifyContent="space-between"
       >
         <Typography variant="h6" fontSize={"1rem"} fontWeight={"bold"}>
-          Column Title
+          {title}
         </Typography>
         <DropdownMenu />
       </Stack>
       {/* Column Body - Cards List */}
-      <ListCards />
+      <ListCards cards={oderedCards} />
       {/* End of Post */}
       <Stack
         sx={{

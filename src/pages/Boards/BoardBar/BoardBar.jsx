@@ -1,7 +1,7 @@
-import React from "react";
-import { Avatar, AvatarGroup, Button, Chip, Stack } from "@mui/material";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { Avatar, AvatarGroup, Button, Chip, Stack } from "@mui/material";
 import Iconify from "../../../components/Iconfy";
+import { capitalizeFirstLetter } from "../../../utils/formatters";
 
 const MENU_STYLES = {
   backgroundColor: "transparent",
@@ -16,7 +16,8 @@ const MENU_STYLES = {
   },
 };
 
-function BoardBar() {
+function BoardBar({ board }) {
+  const { title, type} = board;
   return (
     <Stack
       direction="row"
@@ -38,12 +39,12 @@ function BoardBar() {
           icon={
             <Iconify
               icon="ri:dashboard-fill"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
               color="primary.main"
             />
           }
-          label="HoangMinh"
+          label={title}
           clickable
           sx={MENU_STYLES}
         />
@@ -51,12 +52,12 @@ function BoardBar() {
           icon={
             <Iconify
               icon="material-symbols:vpn-lock"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
               color="primary.main"
             />
           }
-          label="Public/Workspace"
+          label={capitalizeFirstLetter(type)}
           clickable
           sx={MENU_STYLES}
         />
@@ -64,8 +65,8 @@ function BoardBar() {
           icon={
             <Iconify
               icon="material-symbols:add-to-drive"
-              width={22}
-              height={22}
+              width={20}
+              height={20}
               color="primary.main"
             />
           }
