@@ -14,6 +14,7 @@ function Started() {
               "& .MuiButton-endIcon": {
                 marginLeft: "0px",
               },
+              color: "white"
             }}
             {...bindTrigger(popupState)}
           >

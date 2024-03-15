@@ -34,7 +34,7 @@ function Profile() {
           >
             <Avatar
               src="/assets/images/profile-image.jpg"
-              sx={{ width: 32, height: 32 }}
+              sx={{ width: 35, height: 35 }}
             ></Avatar>
           </IconButton>
         </Tooltip>
