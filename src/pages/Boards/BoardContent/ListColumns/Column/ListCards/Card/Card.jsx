@@ -6,13 +6,36 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import Iconify from "~/components/Iconfy";
 function Card({ card }) {
-  const { cover, title, memberIds, attachments, comments } = card;
+  const { cover, title, memberIds, attachments, comments, _id } = card;
+
   const isCardActions =
     !!memberIds?.length || !!comments.length || attachments.length;
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: _id, data: { ...card } });
+
+  const dndKitCardStyles = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : undefined,
+  };
+
   return (
     <MuiCard
+      ref={setNodeRef}
+      style={dndKitCardStyles}
+      {...attributes}
+      {...listeners}
       sx={{
         cursor: "pointer",
         boxShadow: "0 1px 1px rgba(0,0,0,0.2)",
