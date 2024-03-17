@@ -35,6 +35,7 @@ function Column({ column }) {
           maxWidth: 300,
           bgcolor: (theme) =>
             theme.palette.mode === "dark" ? "#333643" : "#ebecf0",
+          border: isDragging ? "1px solid grey" : undefined,
         }}
         ml={2}
         borderRadius={0.75}
