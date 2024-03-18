@@ -142,7 +142,6 @@ function BoardContent({ board }) {
           (card) => card._id
         );
       }
-      console.log(nextColumns, "nextColumns");
 
       return nextColumns;
     });
@@ -292,16 +291,19 @@ function BoardContent({ board }) {
       }
 
       const pointerIntersections = pointerWithin(args);
-      const intersections = !!pointerIntersections.length
-        ? pointerIntersections
-        : rectIntersection(args);
+      // if user drag out of dnd zone will return detect bug
+      if (!pointerIntersections?.length) return;
 
-      let overId = getFirstCollision(intersections, "id");
+      // const intersections = !!pointerIntersections.length
+      //   ? pointerIntersections
+      //   : rectIntersection(args);
+
+      let overId = getFirstCollision(pointerIntersections, "id");
       if (overId) {
         // fix flickering
         const checkColumn = orderedColumns?.find((item) => item._id === overId);
         if (checkColumn) {
-          overId = closestCenter({
+          overId = closestCorners({
             ...args,
             droppableContainers: args?.droppableContainers.filter(
               (e) => e.id !== overId && checkColumn?.cardOrderIds.includes(e.id)
