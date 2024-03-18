@@ -14,9 +14,9 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Stack } from "@mui/material";
-import { cloneDeep } from "lodash";
+import { cloneDeep, isEmpty } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { mapOrder } from "~/utils/formatters";
+import { mapOrder, generatePlaceholderCard } from "~/utils/formatters";
 import Column from "./ListColumns/Column/Column";
 import Card from "./ListColumns/Column/ListCards/Card/Card";
 import ListColumns from "./ListColumns/ListColumns";
@@ -120,6 +120,12 @@ function BoardContent({ board }) {
         nextActiveColumn.cards = nextActiveColumn.cards.filter(
           (card) => card._id !== activeDraggingCardId
         );
+
+        //handle when old Column empty by add field FE_PlaceholderCard
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)];
+        }
+
         // Update cardOrderIds arr
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(
           (card) => card._id
@@ -137,6 +143,11 @@ function BoardContent({ board }) {
           0,
           activeDraggingCardData
         );
+
+        nextOverColumn.cards = nextOverColumn?.cards?.filter(
+          (item) => !item.FE_PlaceholderCard
+        );
+
         // Update cardOrderIds arr
         nextOverColumn.cardOrderIds = nextOverColumn?.cards?.map(
           (card) => card._id

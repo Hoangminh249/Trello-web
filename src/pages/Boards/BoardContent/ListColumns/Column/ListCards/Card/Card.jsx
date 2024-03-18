@@ -13,7 +13,7 @@ function Card({ card }) {
   const { cover, title, memberIds, attachments, comments, _id } = card;
 
   const isCardActions =
-    !!memberIds?.length || !!comments.length || attachments.length;
+    !!memberIds?.length || !!comments?.length || attachments?.length;
 
   const {
     attributes,
@@ -28,7 +28,7 @@ function Card({ card }) {
     transform: CSS.Translate.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : undefined,
-    border: isDragging ? '1px solid grey' : undefined,
+    border: isDragging ? "1px solid grey" : undefined,
   };
 
   return (
@@ -41,6 +41,7 @@ function Card({ card }) {
         cursor: "pointer",
         boxShadow: "0 1px 1px rgba(0,0,0,0.2)",
         overflow: "unset",
+        display: card?.FE_PlaceholderCard ? "none" : "block",
       }}
     >
       {cover && <CardMedia sx={{ height: 140 }} image={cover} />}
@@ -59,7 +60,7 @@ function Card({ card }) {
               {memberIds?.length}
             </Button>
           )}
-          {!!comments.length && (
+          {!!comments?.length && (
             <Button
               size="small"
               startIcon={
@@ -70,7 +71,7 @@ function Card({ card }) {
                 />
               }
             >
-              {comments.length}
+              {comments?.length}
             </Button>
           )}
           {!!attachments.length && (
@@ -84,7 +85,7 @@ function Card({ card }) {
                 />
               }
             >
-              {attachments.length}
+              {attachments?.length}
             </Button>
           )}
         </CardActions>
