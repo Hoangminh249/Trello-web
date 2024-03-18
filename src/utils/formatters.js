@@ -33,3 +33,12 @@ const orderedArray = mapOrder(originalItems, itemOrderIds, key);
 console.log("Original:", originalItems);
 console.log("Ordered:", orderedArray);
  */
+
+export const generatePlaceholderCard = (column) => {
+  return {
+    _id: `${column?._id}-placeholder-card`,
+    boardId: column.boardId,
+    columnId: column._id,
+    FE_PlaceholderCard: true,
+  };
+};
