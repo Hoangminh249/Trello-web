@@ -27,7 +27,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
 };
 
 function BoardContent({ board }) {
-  const { columns, columnOrderIds } = board;
+  // const { columns, columnOrderIds } = board;
   // Variable Dnd.
   const [orderedColumns, setOrderedColumns] = useState([]);
 
@@ -332,7 +332,7 @@ function BoardContent({ board }) {
   );
 
   useEffect(() => {
-    const convertColumns = mapOrder(columns, columnOrderIds, "_id");
+    const convertColumns = mapOrder(board?.columns, board?.columnOrderIds, "_id");
     setOrderedColumns(convertColumns);
   }, [board]);
 
