@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import AppBard from "~/components/AppBard/AppBard";
 import { fetchBoardDetails } from "../../api";
+import { mockData } from "../../api/mock/mock-data";
 import BoardBar from "./BoardBar/BoardBar";
 import BoardContent from "./BoardContent/BoardContent";
 
@@ -17,8 +18,8 @@ function Board() {
   return (
     <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
       <AppBard />
-      <BoardBar board={board} />
-      <BoardContent board={board} />
+      <BoardBar board={mockData.board} />
+      <BoardContent board={mockData.board} />
     </Container>
   );
 }

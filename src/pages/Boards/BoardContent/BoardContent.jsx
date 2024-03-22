@@ -1,7 +1,7 @@
 import {
   DndContext,
-  MouseSensor,
-  TouchSensor,
+  // MouseSensor,
+  // TouchSensor,
   useSensor,
   useSensors,
   DragOverlay,
@@ -17,6 +17,7 @@ import { Stack } from "@mui/material";
 import { cloneDeep, isEmpty } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { mapOrder, generatePlaceholderCard } from "~/utils/formatters";
+import { MouseSensor, TouchSensor } from "~/customLib/DndKitSensors";
 import Column from "./ListColumns/Column/Column";
 import Card from "./ListColumns/Column/ListCards/Card/Card";
 import ListColumns from "./ListColumns/ListColumns";

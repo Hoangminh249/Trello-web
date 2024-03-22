@@ -16,7 +16,7 @@ function ListCards({ cards }) {
       <Stack
         direction="column"
         gap={1}
-        p="0 5px"
+        p="0 5px 5px 5px"
         m="0 5px"
         maxHeight={(theme) => `calc(
       ${theme.trello.boardContentHeight} - ${theme.spacing(5)} - ${
