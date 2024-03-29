@@ -8,7 +8,7 @@ import { mapOrder } from "~/utils/formatters";
 import DropdownMenu from "../../DropdownMenu";
 import ListCards from "./ListCards/ListCards";
 
-function Column({ column }) {
+function Column({ column, handleCreateCard }) {
   const { title, cards, cardOrderIds, _id } = column;
   const oderedCards = mapOrder(cards, cardOrderIds, "_id");
 
@@ -18,10 +18,16 @@ function Column({ column }) {
 
   const onOpenNewCard = () => setOpenNewCard(!openNewCard);
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       return toast.error("Please enter Card title");
     }
+
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id,
+    };
+    await handleCreateCard(newCardData);
 
     onOpenNewCard();
     setNewCardTitle("");

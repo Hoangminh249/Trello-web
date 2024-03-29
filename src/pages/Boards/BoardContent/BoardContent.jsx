@@ -27,7 +27,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: "ACTIVE_DRAG_ITEM_TYPE_CARD",
 };
 
-function BoardContent({ board }) {
+function BoardContent({ board, handleCreateColumn, handleCreateCard }) {
   // const { columns, columnOrderIds } = board;
   // Variable Dnd.
   const [orderedColumns, setOrderedColumns] = useState([]);
@@ -333,7 +333,11 @@ function BoardContent({ board }) {
   );
 
   useEffect(() => {
-    const convertColumns = mapOrder(board?.columns, board?.columnOrderIds, "_id");
+    const convertColumns = mapOrder(
+      board?.columns,
+      board?.columnOrderIds,
+      "_id"
+    );
     setOrderedColumns(convertColumns);
   }, [board]);
 
@@ -356,7 +360,11 @@ function BoardContent({ board }) {
         }}
         p="10px 0"
       >
-        <ListColumns columns={orderedColumns} />
+        <ListColumns
+          columns={orderedColumns}
+          handleCreateColumn={handleCreateColumn}
+          handleCreateCard={handleCreateCard}
+        />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
           {activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COULMN && (

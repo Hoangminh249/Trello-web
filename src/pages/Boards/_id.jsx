@@ -1,13 +1,29 @@
 import { Container } from "@mui/material";
 import { useEffect, useState } from "react";
 import AppBard from "~/components/AppBard/AppBard";
-import { fetchBoardDetails } from "../../api";
-import { mockData } from "../../api/mock/mock-data";
+import { createNewColumn, fetchBoardDetails, createNewCard } from "../../api";
+import { mockData } from "../../mock/mock-data";
 import BoardBar from "./BoardBar/BoardBar";
 import BoardContent from "./BoardContent/BoardContent";
 
 function Board() {
   const [board, setBoard] = useState(null);
+
+  const createColumn = async (newColumnData) => {
+    const columnData = await createNewColumn({
+      ...newColumnData,
+      boardId: board._id,
+    });
+    console.log(columnData, "columnData");
+  };
+
+  const createCard = async (newCardData) => {
+    const cardData = await createNewCard({
+      ...newCardData,
+      boardId: board._id,
+    });
+    console.log(cardData, "cardData");
+  };
 
   useEffect(() => {
     // react-router-dom
@@ -18,8 +34,8 @@ function Board() {
   return (
     <Container disableGutters maxWidth={false} sx={{ height: "100vh" }}>
       <AppBard />
-      <BoardBar board={mockData.board} />
-      <BoardContent board={mockData.board} />
+      <BoardBar board={board} />
+      <BoardContent board={board} handleCreateColumn={createColumn} handleCreateCard={createCard}/>
     </Container>
   );
 }

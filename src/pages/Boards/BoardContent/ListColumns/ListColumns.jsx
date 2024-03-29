@@ -1,5 +1,6 @@
 import {
-  horizontalListSortingStrategy, SortableContext
+  horizontalListSortingStrategy,
+  SortableContext,
 } from "@dnd-kit/sortable";
 import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
@@ -7,17 +8,22 @@ import { toast } from "react-toastify";
 import Iconify from "~/components/Iconfy";
 import Column from "./Column/Column";
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, handleCreateColumn, handleCreateCard }) {
   const [openNewColumn, setOpenNewColumn] = useState(false);
 
   const [newColumnTitle, setNewColumnTitle] = useState("");
 
   const onOpenNewColumn = () => setOpenNewColumn(!openNewColumn);
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       return toast.error("Please enter column name");
     }
+
+    const newColumnData = {
+      title: newColumnTitle,
+    };
+    await handleCreateColumn(newColumnData);
 
     onOpenNewColumn();
     setNewColumnTitle("");
@@ -42,7 +48,13 @@ function ListColumns({ columns }) {
         }}
       >
         {columns.map((col) => {
-          return <Column key={col._id} column={col} />;
+          return (
+            <Column
+              key={col._id}
+              column={col}
+              handleCreateCard={handleCreateCard}
+            />
+          );
         })}
         {/* Box add new Column */}
 
