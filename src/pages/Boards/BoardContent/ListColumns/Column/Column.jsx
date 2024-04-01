@@ -4,13 +4,11 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Iconify from "~/components/Iconfy";
-import { mapOrder } from "~/utils/formatters";
 import DropdownMenu from "../../DropdownMenu";
 import ListCards from "./ListCards/ListCards";
 
 function Column({ column, handleCreateCard }) {
   const { title, cards, cardOrderIds, _id } = column;
-  const oderedCards = mapOrder(cards, cardOrderIds, "_id");
 
   const [openNewCard, setOpenNewCard] = useState(false);
 
@@ -18,7 +16,7 @@ function Column({ column, handleCreateCard }) {
 
   const onOpenNewCard = () => setOpenNewCard(!openNewCard);
 
-  const addNewCard = async () => {
+  const addNewCard = () => {
     if (!newCardTitle) {
       return toast.error("Please enter Card title");
     }
@@ -27,7 +25,7 @@ function Column({ column, handleCreateCard }) {
       title: newCardTitle,
       columnId: column._id,
     };
-    await handleCreateCard(newCardData);
+    handleCreateCard(newCardData);
 
     onOpenNewCard();
     setNewCardTitle("");
@@ -83,7 +81,7 @@ function Column({ column, handleCreateCard }) {
           <DropdownMenu />
         </Stack>
         {/* Column Body - Cards List */}
-        <ListCards cards={oderedCards} />
+        <ListCards cards={cards} />
         {/* End of Post */}
         <Stack
           sx={{

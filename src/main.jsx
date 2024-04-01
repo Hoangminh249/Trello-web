@@ -9,11 +9,9 @@ import "./index.css";
 import theme from "./theme/theme";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <CssVarsProvider theme={theme}>
       <CssBaseline />
       <App />
       <ToastContainer theme={"colored"}/>
     </CssVarsProvider>
-  </React.StrictMode>
 );
