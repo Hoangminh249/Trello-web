@@ -1,10 +1,14 @@
 import {
   closestCorners,
-  defaultDropAnimationSideEffects, DndContext, DragOverlay, getFirstCollision, pointerWithin,
+  defaultDropAnimationSideEffects,
+  DndContext,
+  DragOverlay,
+  getFirstCollision,
+  pointerWithin,
   // MouseSensor,
   // TouchSensor,
   useSensor,
-  useSensors
+  useSensors,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Stack } from "@mui/material";
@@ -27,6 +31,7 @@ function BoardContent({
   handleCreateCard,
   moveColumns,
   handleCardSameColumn,
+  handleCardOtherColumns,
 }) {
   // const { columns, columnOrderIds } = board;
   // Variable Dnd.
@@ -87,7 +92,8 @@ function BoardContent({
     over,
     activeColumn,
     activeDraggingCardId,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerForm
   ) => {
     setOrderedColumns((prevColumns) => {
       // find index of activeCard drop
@@ -155,6 +161,15 @@ function BoardContent({
         );
       }
 
+      if (triggerForm === "handleOnDragEnd") {
+        handleCardOtherColumns(
+          activeDraggingCardId,
+          oldColumnWhenDraggingCard._id,
+          nextOverColumn._id,
+          nextColumns
+        );
+      }
+
       return nextColumns;
     });
   };
@@ -206,7 +221,8 @@ function BoardContent({
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        "handleDragOver"
       );
     }
   };
@@ -237,7 +253,8 @@ function BoardContent({
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          "handleOnDragEnd"
         );
       } else {
         // handle dnd  same column

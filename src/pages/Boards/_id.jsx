@@ -8,6 +8,7 @@ import {
   createNewCard,
   updateBoardDetails,
   updateColumnDetails,
+  moveCardToOtherColumn,
 } from "../../api";
 import Loading from "../../components/Loading";
 import { mockData } from "../../mock/mock-data";
@@ -90,6 +91,33 @@ function Board() {
     updateColumnDetails(columnId, { cardOrderIds: dndOrderedCardsIds });
   };
 
+  const handleCardOtherColumns = (
+    currentCardId,
+    prevColumnId,
+    nextColumnId,
+    dndOrderedColumns
+  ) => {
+    const dndOrderedColumnsIds = dndOrderedColumns.map((item) => item._id);
+
+    const newBoard = { ...board };
+
+    newBoard.columns = dndOrderedColumns;
+    newBoard.columnOrderIds = dndOrderedColumnsIds;
+    setBoard(newBoard);
+
+    moveCardToOtherColumn({
+      currentCardId,
+      prevColumnId,
+      prevCardOrderIds: dndOrderedColumns.find(
+        (col) => col._id === prevColumnId
+      )?.cardOrderIds,
+      nextColumnId,
+      nextCardOrderIds: dndOrderedColumns.find(
+        (col) => col._id === nextColumnId
+      )?.cardOrderIds,
+    });
+  };
+
   useEffect(() => {
     // react-router-dom
     const boardId = "65fc1bef2d698afc708ef029";
@@ -124,6 +152,7 @@ function Board() {
         handleCreateCard={createCard}
         moveColumns={moveColumns}
         handleCardSameColumn={moveCardInSameColumn}
+        handleCardOtherColumns={handleCardOtherColumns}
       />
       s
     </Container>
