@@ -48,10 +48,14 @@ function Board() {
     );
 
     if (columnToUpdate) {
-      columnToUpdate.cards.push(cardData);
-      columnToUpdate.cardOrderIds.push(cardData._id);
+      if (columnToUpdate.cards.some((card) => card.FE_PlaceholderCard)) {
+        columnToUpdate.cards = [cardData];
+        columnToUpdate.cardOrderIds = [cardData._id];
+      } else {
+        columnToUpdate.cards.push(cardData);
+        columnToUpdate.cardOrderIds.push(cardData._id);
+      }
     }
-
     setBoard(newBoard);
   };
 
@@ -105,12 +109,16 @@ function Board() {
     newBoard.columnOrderIds = dndOrderedColumnsIds;
     setBoard(newBoard);
 
+    let prevCardOrderIds =
+      dndOrderedColumns.find((col) => col._id === prevColumnId)?.cardOrderIds ||
+      [];
+
+    if (prevCardOrderIds[0].includes("placeholder-card")) prevCardOrderIds = [];
+
     moveCardToOtherColumn({
       currentCardId,
       prevColumnId,
-      prevCardOrderIds: dndOrderedColumns.find(
-        (col) => col._id === prevColumnId
-      )?.cardOrderIds,
+      prevCardOrderIds,
       nextColumnId,
       nextCardOrderIds: dndOrderedColumns.find(
         (col) => col._id === nextColumnId
