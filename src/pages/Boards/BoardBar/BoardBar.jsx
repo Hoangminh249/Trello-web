@@ -1,5 +1,5 @@
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { Avatar, AvatarGroup, Button, Chip, Stack } from "@mui/material";
+import { Avatar, AvatarGroup, Button, Chip, Stack, Tooltip } from "@mui/material";
 import Iconify from "../../../components/Iconfy";
 import { capitalizeFirstLetter } from "../../../utils/formatters";
 
@@ -17,7 +17,6 @@ const MENU_STYLES = {
 };
 
 function BoardBar({ board }) {
-  const { title, type} = board;
   return (
     <Stack
       direction="row"
@@ -35,6 +34,7 @@ function BoardBar({ board }) {
       px={2}
     >
       <Stack direction={"row"} gap={1} alignItems="center">
+        <Tooltip title={board?.description}>
         <Chip
           icon={
             <Iconify
@@ -44,10 +44,11 @@ function BoardBar({ board }) {
               color="primary.main"
             />
           }
-          label={title}
+          label={board?.title}
           clickable
           sx={MENU_STYLES}
         />
+        </Tooltip>
         <Chip
           icon={
             <Iconify
@@ -57,7 +58,7 @@ function BoardBar({ board }) {
               color="primary.main"
             />
           }
-          label={capitalizeFirstLetter(type)}
+          label={capitalizeFirstLetter(board?.type)}
           clickable
           sx={MENU_STYLES}
         />

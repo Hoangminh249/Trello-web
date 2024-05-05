@@ -18,11 +18,13 @@
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.12",
+    "axios": "^1.6.8",
     "framer-motion": "^11.0.8",
     "lodash": "^4.17.21",
     "material-ui-popup-state": "^5.0.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

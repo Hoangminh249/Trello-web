@@ -1,22 +1,21 @@
 import {
-  DndContext,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-  DragOverlay,
   closestCorners,
   defaultDropAnimationSideEffects,
-  pointerWithin,
-  rectIntersection,
+  DndContext,
+  DragOverlay,
   getFirstCollision,
-  closestCenter,
+  pointerWithin,
+  // MouseSensor,
+  // TouchSensor,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Stack } from "@mui/material";
 import { cloneDeep, isEmpty } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { mapOrder, generatePlaceholderCard } from "~/utils/formatters";
+import { MouseSensor, TouchSensor } from "~/customLib/DndKitSensors";
+import { generatePlaceholderCard } from "~/utils/formatters";
 import Column from "./ListColumns/Column/Column";
 import Card from "./ListColumns/Column/ListCards/Card/Card";
 import ListColumns from "./ListColumns/ListColumns";
@@ -26,8 +25,15 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: "ACTIVE_DRAG_ITEM_TYPE_CARD",
 };
 
-function BoardContent({ board }) {
-  const { columns, columnOrderIds } = board;
+function BoardContent({
+  board,
+  handleCreateColumn,
+  handleCreateCard,
+  moveColumns,
+  handleCardSameColumn,
+  handleCardOtherColumns,
+}) {
+  // const { columns, columnOrderIds } = board;
   // Variable Dnd.
   const [orderedColumns, setOrderedColumns] = useState([]);
 
@@ -86,7 +92,8 @@ function BoardContent({ board }) {
     over,
     activeColumn,
     activeDraggingCardId,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerForm
   ) => {
     setOrderedColumns((prevColumns) => {
       // find index of activeCard drop
@@ -154,6 +161,15 @@ function BoardContent({ board }) {
         );
       }
 
+      if (triggerForm === "handleOnDragEnd") {
+        handleCardOtherColumns(
+          activeDraggingCardId,
+          oldColumnWhenDraggingCard._id,
+          nextOverColumn._id,
+          nextColumns
+        );
+      }
+
       return nextColumns;
     });
   };
@@ -205,7 +221,8 @@ function BoardContent({ board }) {
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        "handleDragOver"
       );
     }
   };
@@ -236,7 +253,8 @@ function BoardContent({ board }) {
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          "handleOnDragEnd"
         );
       } else {
         // handle dnd  same column
@@ -253,6 +271,8 @@ function BoardContent({ board }) {
           newCardIndex
         );
 
+        const dndOrderedCardsIds = dndOrderedCards?.map((card) => card?._id);
+
         setOrderedColumns((prevColumns) => {
           const nextColumns = cloneDeep(prevColumns);
           // find column dropping
@@ -261,10 +281,16 @@ function BoardContent({ board }) {
           );
           // update 2 value are card and cardOrderIds in targetColumn
           targetColumn.cards = dndOrderedCards;
-          targetColumn.cardOrderIds = dndOrderedCards?.map((card) => card?._id);
+          targetColumn.cardOrderIds = dndOrderedCardsIds;
 
           return nextColumns;
         });
+
+        handleCardSameColumn(
+          dndOrderedCards,
+          dndOrderedCardsIds,
+          oldColumnWhenDraggingCard._id
+        );
       }
     }
     //handle dnd column in board
@@ -284,6 +310,8 @@ function BoardContent({ board }) {
         );
         // const dnOrderedColumnsIds = dndOrderedColumns.map((item) => item._id);
         // console.log({dndOrderedColumns,dnOrderedColumnsIds});
+
+        moveColumns(dndOrderedColumns);
         setOrderedColumns(dndOrderedColumns);
       }
     }
@@ -332,8 +360,7 @@ function BoardContent({ board }) {
   );
 
   useEffect(() => {
-    const convertColumns = mapOrder(columns, columnOrderIds, "_id");
-    setOrderedColumns(convertColumns);
+    setOrderedColumns(board.columns);
   }, [board]);
 
   return (
@@ -355,7 +382,11 @@ function BoardContent({ board }) {
         }}
         p="10px 0"
       >
-        <ListColumns columns={orderedColumns} />
+        <ListColumns
+          columns={orderedColumns}
+          handleCreateColumn={handleCreateColumn}
+          handleCreateCard={handleCreateCard}
+        />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
           {activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COULMN && (
